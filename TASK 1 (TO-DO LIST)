@@ -1,0 +1,69 @@
+class Task:
+    def __init__(self, title, description):
+        self.title = title
+        self.description = description
+        self.completed = False
+
+    def mark_completed(self):
+        self.completed = True
+
+    def __str__(self):
+        status = "✓" if self.completed else "✗"
+        return f"[{status}] {self.title}: {self.description}"
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, title, description):
+        task = Task(title, description)
+        self.tasks.append(task)
+
+    def update_task(self, index, title, description):
+        if 0 <= index < len(self.tasks):
+            self.tasks[index].title = title
+            self.tasks[index].description = description
+
+    def mark_task_completed(self, index):
+        if 0 <= index < len(self.tasks):
+            self.tasks[index].mark_completed()
+
+    def display_tasks(self):
+        for index, task in enumerate(self.tasks):
+            print(f"{index + 1}. {task}")
+def main():
+    todo_list = ToDoList()
+
+    while True:
+        print("\nTo-Do List Application")
+        print("1. Add Task")
+        print("2. Update Task")
+        print("3. Mark Task Completed")
+        print("4. Display Tasks")
+        print("5. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            title = input("Enter task title: ")
+            description = input("Enter task description: ")
+            todo_list.add_task(title, description)
+        elif choice == '2':
+            todo_list.display_tasks()
+            index = int(input("Enter task number to update: ")) - 1
+            title = input("Enter new task title: ")
+            description = input("Enter new task description: ")
+            todo_list.update_task(index, title, description)
+        elif choice == '3':
+            todo_list.display_tasks()
+            index = int(input("Enter task number to mark as completed: ")) - 1
+            todo_list.mark_task_completed(index)
+        elif choice == '4':
+            todo_list.display_tasks()
+        elif choice == '5':
+            print("Exiting the application.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
